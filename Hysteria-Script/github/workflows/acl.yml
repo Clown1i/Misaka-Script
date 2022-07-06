@@ -1,0 +1,57 @@
+name: Fetch ACL
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 22 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Fetch latest rulelist 
+        run: |
+          cd acl
+          rm -f Country.mmdb routes.acl updatelog.txt
+          python3 GetRoutes.py
+          echo "Updated: $(date)" > updatelog.txt
+          cd ..
+      - name: Git uploading
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        run: |
+          git config --global user.email "$GIT_EMAIL"
+          git config --global user.name "$GIT_USERNAME"
+          git add .
+          git commit -m "Uploaded by Github Actions, Date: $(date)"
+          git push
+      - name: Zipping acl rulelist
+        run: |
+          cd acl
+          zip acl.zip Country.mmdb routes.acl
+          mv acl.zip ${GITHUB_WORKSPACE}/acl.zip
+          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: ${{ env.RELEASE_NAME }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./acl.zip
+          asset_name: acl.zip
+          asset_content_type: application/zip

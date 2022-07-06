@@ -1,0 +1,36 @@
+name: Fetch wgcf latest version
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 30 12 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checking and fetching wgcf latest version
+        run: |
+          wget -N https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/github/wgcf.sh
+          bash wgcf.sh
+      - name: Git uploading
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        run: |
+          git config --global user.email "$GIT_EMAIL"
+          git config --global user.name "$GIT_USERNAME"
+          git add .
+          git commit -m "Uploaded by Github Actions, Date: $(date)"
+          git push
+      - name: Refreshing Jsdelivr
+        run: |
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_386
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_amd64
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_armv5
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_armv6
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_armv7
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_arm64
+          curl https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/files/wgcf_latest_linux_s390x
