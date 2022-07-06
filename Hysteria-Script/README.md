@@ -77,7 +77,3 @@ YouTube 不良林：https://www.youtube.com/watch?v=pMe_oErfLWQ
 ## 交流
 
 [Telegram 群组](https://t.me/misakanetcn)
-
-## Stars 增长记录
-
-[![Stargazers over time](https://starchart.cc/Misaka-blog/Hysteria-script.svg)](https://starchart.cc/Misaka-blog/Hysteria-script)
