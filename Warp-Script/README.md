@@ -11,7 +11,7 @@
 ## 使用方法
 
 ```shell
-wget -N --no-check-certificate https://raw.githubusercontents.com/Misaka-blog/Misaka-WARP-Script/master/misakawarp.sh && bash misakawarp.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Warp-Script/misakawarp.sh && bash misakawarp.sh
 ```
 
 快捷方式 `bash misakawarp.sh`
@@ -77,10 +77,6 @@ WARP Teams：https://owo.misaka.rest/cf-teams/
 ### 4. 无法在Wgcf-WARP或Wireproxy-WARP使用WARP+账号？
 
 这是因为你的WARP+流量不够导致的，还是乖乖刷好足够流量再尝试吧
-
-## 赞助我们
-
-![afdian-MisakaNo.jpg](https://s2.loli.net/2021/12/25/SimocqwhVg89NQJ.jpg)
 
 ## 交流群
 [Telegram](https://t.me/misakanetcn)
