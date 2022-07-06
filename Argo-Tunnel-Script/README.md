@@ -7,7 +7,7 @@
 ## 使用方法
 
 ```shell
-wget -N --no-check-certificate https://raw.githubusercontents.com/Misaka-blog/argo-tunnel-script/master/argo.sh && bash argo.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/Clown1i/Misaka-Script/main/Argo-Tunnel-Script/argo.sh && bash argo.sh
 ```
 
 快捷方式 `bash argo.sh`
